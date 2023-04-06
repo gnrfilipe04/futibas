@@ -6,7 +6,7 @@ class MyButton extends StatelessWidget {
       required this.onPressed,
       required this.title,
       required this.bgColor,
-      this.icon, 
+      this.icon,
       required this.titleColor})
       : super(key: key);
 
@@ -51,6 +51,9 @@ class MyButton extends StatelessWidget {
         ),
         child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Text(title, style: TextStyle(color: titleColor),)));
+            child: Text(
+              title,
+              style: TextStyle(color: titleColor, fontWeight: FontWeight.w600),
+            )));
   }
 }
