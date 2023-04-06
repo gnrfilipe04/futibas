@@ -41,6 +41,22 @@ mixin _$AuthViewModel on _AuthViewModelBase, Store {
     });
   }
 
+  late final _$regosterRecognizerAtom =
+      Atom(name: '_AuthViewModelBase.regosterRecognizer', context: context);
+
+  @override
+  TapGestureRecognizer get regosterRecognizer {
+    _$regosterRecognizerAtom.reportRead();
+    return super.regosterRecognizer;
+  }
+
+  @override
+  set regosterRecognizer(TapGestureRecognizer value) {
+    _$regosterRecognizerAtom.reportWrite(value, super.regosterRecognizer, () {
+      super.regosterRecognizer = value;
+    });
+  }
+
   late final _$_AuthViewModelBaseActionController =
       ActionController(name: '_AuthViewModelBase', context: context);
 
@@ -67,10 +83,44 @@ mixin _$AuthViewModel on _AuthViewModelBase, Store {
   }
 
   @override
+  String? validatorEmail(String? value) {
+    final _$actionInfo = _$_AuthViewModelBaseActionController.startAction(
+        name: '_AuthViewModelBase.validatorEmail');
+    try {
+      return super.validatorEmail(value);
+    } finally {
+      _$_AuthViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  String? validatorPass(String? value) {
+    final _$actionInfo = _$_AuthViewModelBaseActionController.startAction(
+        name: '_AuthViewModelBase.validatorPass');
+    try {
+      return super.validatorPass(value);
+    } finally {
+      _$_AuthViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic onSubmit({required BuildContext context}) {
+    final _$actionInfo = _$_AuthViewModelBaseActionController.startAction(
+        name: '_AuthViewModelBase.onSubmit');
+    try {
+      return super.onSubmit(context: context);
+    } finally {
+      _$_AuthViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 email: ${email},
-password: ${password}
+password: ${password},
+regosterRecognizer: ${regosterRecognizer}
     ''';
   }
 }

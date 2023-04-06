@@ -1,5 +1,6 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:futibas/app/app_provider.dart';
+import 'package:futibas/screens/auth/auth_view_model.dart';
 import 'package:futibas/theme/my_colors.dart';
 import 'package:futibas/widgets/my_button.dart';
 import 'package:futibas/widgets/my_input.dart';
@@ -13,16 +14,13 @@ class AuthView extends StatefulWidget {
 }
 
 class _AuthViewState extends State<AuthView> {
+  final AuthViewModel authViewModel = provider<AuthViewModel>();
+
   @override
   Widget build(BuildContext context) {
-    TapGestureRecognizer regosterRecognizer = TapGestureRecognizer()
-      ..onTap = () {
-        print("Terms and condition tapped");
-      };
-
-    onPressed() {}
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: Column(
@@ -34,39 +32,56 @@ class _AuthViewState extends State<AuthView> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  Image.asset('assets/Logo4x.png', width: 157, height: 40, fit: BoxFit.contain),
+                  Image.asset('assets/Logo4x.png',
+                      width: 157, height: 40, fit: BoxFit.contain),
                   const SizedBox(
                     height: 10,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      const MyInput(label: 'E-mail'),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const MyInput(label: 'Senha'),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      InkWell(
-                        onTap: (){ print('esqueceu a senha'); },
-                        child: const Text('Esqueci a senha')
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                    ],
+                  Form(
+                    key: authViewModel.formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        MyInput(
+                          label: 'E-mail',
+                          validatorMethod: authViewModel.validatorEmail,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        MyInput(
+                          label: 'Senha',
+                          validatorMethod: authViewModel.validatorPass,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        InkWell(
+                            onTap: () {
+                              print('esqueceu a senha');
+                            },
+                            splashFactory: NoSplash.splashFactory,
+                            child: const Text('Esqueci a senha')),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                      ],
+                    ),
                   ),
                   MyButton(
-                      onPressed: onPressed,
+                      onPressed: () => authViewModel.onSubmit(context: context),
                       title: 'Entrar',
                       titleColor: MyColors.dark,
                       bgColor: MyColors.primary),
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   MyButton(
-                      icon: const Icon(Icons.email, color: MyColors.secondary,),
-                      onPressed: onPressed,
+                      icon: const Icon(
+                        Icons.email,
+                        color: MyColors.secondary,
+                      ),
+                      onPressed: () => authViewModel.onSubmit(context: context),
                       title: 'Entrar com google',
                       titleColor: MyColors.secondary,
                       bgColor: MyColors.darkSecondary)
@@ -80,7 +95,7 @@ class _AuthViewState extends State<AuthView> {
                 children: <TextSpan>[
                   TextSpan(
                       text: 'Registre-se',
-                      recognizer: regosterRecognizer,
+                      recognizer: authViewModel.regosterRecognizer,
                       style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: MyColors.primary)),
