@@ -105,6 +105,17 @@ mixin _$AuthViewModel on _AuthViewModelBase, Store {
   }
 
   @override
+  dynamic toHome() {
+    final _$actionInfo = _$_AuthViewModelBaseActionController.startAction(
+        name: '_AuthViewModelBase.toHome');
+    try {
+      return super.toHome();
+    } finally {
+      _$_AuthViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic onSubmit({required BuildContext context}) {
     final _$actionInfo = _$_AuthViewModelBaseActionController.startAction(
         name: '_AuthViewModelBase.onSubmit');

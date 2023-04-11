@@ -81,7 +81,7 @@ class _AuthViewState extends State<AuthView> {
                         Icons.email,
                         color: MyColors.secondary,
                       ),
-                      onPressed: () => authViewModel.onSubmit(context: context),
+                      onPressed: () => authViewModel.toHome(),
                       title: 'Entrar com google',
                       titleColor: MyColors.secondary,
                       bgColor: MyColors.darkSecondary)

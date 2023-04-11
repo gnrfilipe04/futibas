@@ -1,5 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:futibas/app/app_provider.dart';
+import 'package:futibas/services/NavigationService.dart';
 import 'package:mobx/mobx.dart';
 import 'package:validadores/Validador.dart';
 part 'auth_view_model.g.dart';
@@ -8,6 +10,7 @@ class AuthViewModel = _AuthViewModelBase with _$AuthViewModel;
 
 abstract class _AuthViewModelBase with Store {
   final formKey = GlobalKey<FormState>();
+  NavigationService navigationService = provider<NavigationService>();
 
   @observable
   String email = '';
@@ -48,6 +51,11 @@ abstract class _AuthViewModelBase with Store {
         errorMessage?.replaceAll('[', '').replaceAll(']', '').split(',')[0];
 
     return messageFormatted;
+  }
+
+  @action 
+  toHome(){
+    return navigationService.navigateTo(routeName: 'Home');
   }
 
   @action
