@@ -8,12 +8,25 @@ class MyTheme with ChangeNotifier {
   var baseTheme = ThemeData.dark();
     return ThemeData(
       useMaterial3: true,
+      splashFactory: NoSplash.splashFactory,
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: MyColors.primary,
         foregroundColor: MyColors.dark,
       ),
       primaryColor: MyColors.primary,
-      backgroundColor: MyColors.dark,
+      colorScheme: const ColorScheme(
+        primary: MyColors.primary,
+        onPrimary: MyColors.primary,
+        secondary: MyColors.secondary,
+        onSecondary: MyColors.secondary,
+        brightness: Brightness.dark,
+        error: Colors.red,
+        onError: Colors.red,
+        background: MyColors.dark,
+        onBackground: MyColors.dark,
+        surface: MyColors.primary,
+        onSurface: MyColors.primary
+      ),
       splashColor: MyColors.primary,
       appBarTheme: AppBarTheme(
         color: MyColors.dark,
