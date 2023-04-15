@@ -23,11 +23,11 @@ class _HomeViewState extends State<HomeView> {
         actions: const [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 5),
-            child: Icon(Icons.search, color: MyColors.secondary, size: 29,),
+            child: Icon(Icons.search, color: MyColors.secondary, size: 24,),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 5),
-            child: Icon(Icons.notifications, color: MyColors.secondary, size: 29,),
+            child: Icon(Icons.notifications, color: MyColors.secondary, size: 24,),
           ),
           Padding(
             padding: EdgeInsets.only(right: 20, left: 5),
@@ -41,14 +41,14 @@ class _HomeViewState extends State<HomeView> {
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+              children: const [
                 Text('Suas partidas', style: TextStyle(color: MyColors.secondary, fontSize: 14),),
                 Icon(Icons.add, color: MyColors.primary, size: 29,),
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: MyCard(),
           )
         ],
