@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:futibas/theme/my_colors.dart';
 
 class MyCard extends StatelessWidget {
@@ -9,6 +7,7 @@ class MyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 0,
       color: MyColors.darkSecondary,
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -31,24 +30,24 @@ class MyCard extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 5),
                       child: Text(
                         '04.04.2023 às 20:30',
-                        style: TextStyle(color: MyColors.primary),
+                        style: TextStyle(color: MyColors.primary, fontWeight: FontWeight.bold),
                       ),
                     ),
                     Icon(
-                      Icons.calendar_month,
+                      Icons.date_range,
                       color: MyColors.primary,
                     )
                   ],
                 )
               ],
             ),
-            const Padding(
-              padding: EdgeInsets.only(top: 20),
-              child: DescriptionItem(title: 'Local', description: 'AABB', icon: Icons.sports_soccer,),
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: DescriptionItem(title: 'Local', description: 'AABB', icon: Image.asset('assets/Stadium.png', height: 20,),),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: DescriptionItem( title: 'Jogadores', description: '16', icon: Icons.man,),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: DescriptionItem( title: 'Jogadores', description: '16', icon: Image.asset('assets/Player.png', height: 20),),
             ),
           ],
         ),
@@ -62,7 +61,7 @@ class DescriptionItem extends StatelessWidget {
 
   final String title;
   final String description;
-  final IconData icon;
+  final Image icon;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +73,7 @@ class DescriptionItem extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(right: 5),
-              child: Icon(icon, color: MyColors.secondary),
+              child: icon,
             ),
             Text(
               title,
@@ -84,7 +83,7 @@ class DescriptionItem extends StatelessWidget {
         ),
         Text(
           description,
-          style: const TextStyle(color: MyColors.primary),
+          style: const TextStyle(color: MyColors.primary, fontWeight: FontWeight.bold),
         )
       ],
     );

@@ -4,6 +4,7 @@ import 'package:futibas/app/app_provider.dart';
 import 'package:futibas/screens/home/home_view_model.dart';
 import 'package:futibas/theme/my_colors.dart';
 import 'package:futibas/widgets/my_card.dart';
+import 'package:futibas/widgets/my_player_card.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -17,9 +18,7 @@ class _HomeViewState extends State<HomeView> {
 
   List<Widget> widgetOptions = <Widget>[
     const PrimaryScreen(),
-    const Text(
-      'Index 1: Business',
-    ),
+    const SecondaryScreen()
   ];
 
   @override
@@ -58,7 +57,7 @@ class _HomeViewState extends State<HomeView> {
               Icons.account_circle,
               color: MyColors.darkSecondary,
               size: 29,
-            ),
+            ),  
           ),
         ],
       ),
@@ -74,7 +73,7 @@ class _HomeViewState extends State<HomeView> {
           currentIndex: homeViewModel.selectedIndex,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-            BottomNavigationBarItem(icon: Icon(Icons.equalizer), label: '')
+            BottomNavigationBarItem(icon: Icon(Icons.group), label: '')
           ],
         );
       }),
@@ -114,6 +113,45 @@ class _PrimaryScreenState extends State<PrimaryScreen> {
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: MyCard(),
+        )
+      ],
+    );
+  }
+}
+
+
+class SecondaryScreen extends StatefulWidget {
+  const SecondaryScreen({super.key});
+
+  @override
+  State<SecondaryScreen> createState() => _SecondaryScreenState();
+}
+
+class _SecondaryScreenState extends State<SecondaryScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: const [
+              Text(
+                'Seus jogadores',
+                style: TextStyle(color: MyColors.secondary, fontSize: 14),
+              ),
+              Icon(
+                Icons.add,
+                color: MyColors.primary,
+                size: 29,
+              ),
+            ],
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: MyCardPlayer(),
         )
       ],
     );
