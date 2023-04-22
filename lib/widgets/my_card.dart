@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:futibas/theme/my_colors.dart';
+import 'package:intl/intl.dart';
 
 class MyCard extends StatelessWidget {
-  const MyCard({super.key});
+  const MyCard({super.key, required this.title, required this.date, required this.local, required this.players});
+
+  final String title;
+  final DateTime date;
+  final String local;
+  final int players;
 
   @override
   Widget build(BuildContext context) {
@@ -16,24 +22,24 @@ class MyCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Futebol 7',
-                  style: TextStyle(
+                Text(
+                  title,
+                  style: const TextStyle(
                       color: MyColors.secondary,
                       fontSize: 16,
                       fontWeight: FontWeight.bold),
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
+                  children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
                       child: Text(
-                        '04.04.2023 às 20:30',
-                        style: TextStyle(color: MyColors.primary, fontWeight: FontWeight.bold),
+                        '${DateFormat('dd.MM.yyyy').format(date)} às ${DateFormat('HH:mm').format(date)}',
+                        style: const TextStyle(color: MyColors.primary, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Icon(
+                    const Icon(
                       Icons.date_range,
                       color: MyColors.primary,
                     )
@@ -43,11 +49,11 @@ class MyCard extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20),
-              child: DescriptionItem(title: 'Local', description: 'AABB', icon: Image.asset('assets/Stadium.png', height: 20,),),
+              child: DescriptionItem(title: 'Local', description: local, icon: Image.asset('assets/Stadium.png', height: 20,),),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
-              child: DescriptionItem( title: 'Jogadores', description: '16', icon: Image.asset('assets/Player.png', height: 20),),
+              child: DescriptionItem( title: 'Jogadores', description: players.toString(), icon: Image.asset('assets/Player.png', height: 20),),
             ),
           ],
         ),

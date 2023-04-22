@@ -25,6 +25,38 @@ mixin _$HomeViewModel on _HomeViewModelBase, Store {
     });
   }
 
+  late final _$matchsAtom =
+      Atom(name: '_HomeViewModelBase.matchs', context: context);
+
+  @override
+  List<MatchModel> get matchs {
+    _$matchsAtom.reportRead();
+    return super.matchs;
+  }
+
+  @override
+  set matchs(List<MatchModel> value) {
+    _$matchsAtom.reportWrite(value, super.matchs, () {
+      super.matchs = value;
+    });
+  }
+
+  late final _$playersAtom =
+      Atom(name: '_HomeViewModelBase.players', context: context);
+
+  @override
+  List<PlayerModel> get players {
+    _$playersAtom.reportRead();
+    return super.players;
+  }
+
+  @override
+  set players(List<PlayerModel> value) {
+    _$playersAtom.reportWrite(value, super.players, () {
+      super.players = value;
+    });
+  }
+
   late final _$_HomeViewModelBaseActionController =
       ActionController(name: '_HomeViewModelBase', context: context);
 
@@ -42,7 +74,193 @@ mixin _$HomeViewModel on _HomeViewModelBase, Store {
   @override
   String toString() {
     return '''
-selectedIndex: ${selectedIndex}
+selectedIndex: ${selectedIndex},
+matchs: ${matchs},
+players: ${players}
+    ''';
+  }
+}
+
+mixin _$MatchModel on _MatchModelBase, Store {
+  late final _$titleAtom =
+      Atom(name: '_MatchModelBase.title', context: context);
+
+  @override
+  String get title {
+    _$titleAtom.reportRead();
+    return super.title;
+  }
+
+  @override
+  set title(String value) {
+    _$titleAtom.reportWrite(value, super.title, () {
+      super.title = value;
+    });
+  }
+
+  late final _$dateAtom = Atom(name: '_MatchModelBase.date', context: context);
+
+  @override
+  DateTime get date {
+    _$dateAtom.reportRead();
+    return super.date;
+  }
+
+  @override
+  set date(DateTime value) {
+    _$dateAtom.reportWrite(value, super.date, () {
+      super.date = value;
+    });
+  }
+
+  late final _$localAtom =
+      Atom(name: '_MatchModelBase.local', context: context);
+
+  @override
+  String get local {
+    _$localAtom.reportRead();
+    return super.local;
+  }
+
+  @override
+  set local(String value) {
+    _$localAtom.reportWrite(value, super.local, () {
+      super.local = value;
+    });
+  }
+
+  late final _$playersAtom =
+      Atom(name: '_MatchModelBase.players', context: context);
+
+  @override
+  int get players {
+    _$playersAtom.reportRead();
+    return super.players;
+  }
+
+  @override
+  set players(int value) {
+    _$playersAtom.reportWrite(value, super.players, () {
+      super.players = value;
+    });
+  }
+
+  @override
+  String toString() {
+    return '''
+title: ${title},
+date: ${date},
+local: ${local},
+players: ${players}
+    ''';
+  }
+}
+
+mixin _$PlayerModel on _PlayerModelBase, Store {
+  late final _$nameAtom = Atom(name: '_PlayerModelBase.name', context: context);
+
+  @override
+  String get name {
+    _$nameAtom.reportRead();
+    return super.name;
+  }
+
+  @override
+  set name(String value) {
+    _$nameAtom.reportWrite(value, super.name, () {
+      super.name = value;
+    });
+  }
+
+  late final _$usernameAtom =
+      Atom(name: '_PlayerModelBase.username', context: context);
+
+  @override
+  String get username {
+    _$usernameAtom.reportRead();
+    return super.username;
+  }
+
+  @override
+  set username(String value) {
+    _$usernameAtom.reportWrite(value, super.username, () {
+      super.username = value;
+    });
+  }
+
+  late final _$positionAtom =
+      Atom(name: '_PlayerModelBase.position', context: context);
+
+  @override
+  String get position {
+    _$positionAtom.reportRead();
+    return super.position;
+  }
+
+  @override
+  set position(String value) {
+    _$positionAtom.reportWrite(value, super.position, () {
+      super.position = value;
+    });
+  }
+
+  late final _$starsAtom =
+      Atom(name: '_PlayerModelBase.stars', context: context);
+
+  @override
+  double get stars {
+    _$starsAtom.reportRead();
+    return super.stars;
+  }
+
+  @override
+  set stars(double value) {
+    _$starsAtom.reportWrite(value, super.stars, () {
+      super.stars = value;
+    });
+  }
+
+  late final _$overallAtom =
+      Atom(name: '_PlayerModelBase.overall', context: context);
+
+  @override
+  int get overall {
+    _$overallAtom.reportRead();
+    return super.overall;
+  }
+
+  @override
+  set overall(int value) {
+    _$overallAtom.reportWrite(value, super.overall, () {
+      super.overall = value;
+    });
+  }
+
+  late final _$contactAtom =
+      Atom(name: '_PlayerModelBase.contact', context: context);
+
+  @override
+  int get contact {
+    _$contactAtom.reportRead();
+    return super.contact;
+  }
+
+  @override
+  set contact(int value) {
+    _$contactAtom.reportWrite(value, super.contact, () {
+      super.contact = value;
+    });
+  }
+
+  @override
+  String toString() {
+    return '''
+name: ${name},
+username: ${username},
+position: ${position},
+stars: ${stars},
+overall: ${overall},
+contact: ${contact}
     ''';
   }
 }

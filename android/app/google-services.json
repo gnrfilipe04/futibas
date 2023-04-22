@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "954554939276",
+    "project_id": "futibas-c0723",
+    "storage_bucket": "futibas-c0723.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:954554939276:android:50d49e2c7e203006f448a9",
+        "android_client_info": {
+          "package_name": "com.example.futibas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "954554939276-0gj962tm98jn0vjfln8lqr3jit33mi3d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDT9nDb2B-zzWzwWhu7UdDevWX2C82ZfVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "954554939276-0gj962tm98jn0vjfln8lqr3jit33mi3d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

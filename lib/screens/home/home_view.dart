@@ -16,13 +16,16 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   HomeViewModel homeViewModel = provider<HomeViewModel>();
 
-  List<Widget> widgetOptions = <Widget>[
-    const PrimaryScreen(),
-    const SecondaryScreen()
-  ];
+  
 
   @override
   Widget build(BuildContext context) {
+
+    List<Widget> widgetOptions = <Widget>[
+      PrimaryScreen(matchs: homeViewModel.matchs,),
+      SecondaryScreen(players: homeViewModel.players,)
+    ];
+
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 114,
@@ -82,7 +85,9 @@ class _HomeViewState extends State<HomeView> {
 }
 
 class PrimaryScreen extends StatefulWidget {
-  const PrimaryScreen({super.key});
+  const PrimaryScreen({super.key, required this.matchs});
+
+  final List<MatchModel> matchs;
 
   @override
   State<PrimaryScreen> createState() => _PrimaryScreenState();
@@ -110,9 +115,20 @@ class _PrimaryScreenState extends State<PrimaryScreen> {
             ],
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: MyCard(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: widget.matchs.length,
+            itemBuilder: (context, int index){
+              return MyCard(
+                date: DateTime.now(),
+                title: widget.matchs[index].title,
+                local: widget.matchs[index].local,
+                players: widget.matchs[index].players,
+              );
+            }
+          ),
         )
       ],
     );
@@ -121,7 +137,9 @@ class _PrimaryScreenState extends State<PrimaryScreen> {
 
 
 class SecondaryScreen extends StatefulWidget {
-  const SecondaryScreen({super.key});
+  const SecondaryScreen({super.key, required this.players});
+
+  final List<PlayerModel> players;
 
   @override
   State<SecondaryScreen> createState() => _SecondaryScreenState();
@@ -149,9 +167,24 @@ class _SecondaryScreenState extends State<SecondaryScreen> {
             ],
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: MyCardPlayer(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: widget.players.length,
+            itemBuilder: (context, int index){
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: MyCardPlayer(
+                  name: widget.players[index].name,
+                  username: widget.players[index].username,
+                  overall: widget.players[index].overall,
+                  position: widget.players[index].position,
+                  stars: widget.players[index].stars,
+                ),
+              );
+            }
+          ),
         )
       ],
     );

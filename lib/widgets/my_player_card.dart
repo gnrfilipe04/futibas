@@ -3,7 +3,19 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:futibas/theme/my_colors.dart';
 
 class MyCardPlayer extends StatelessWidget {
-  const MyCardPlayer({super.key});
+  const MyCardPlayer(
+      {super.key,
+      required this.name,
+      required this.position,
+      required this.username,
+      required this.overall,
+      required this.stars});
+
+  final String name;
+  final String position;
+  final String username;
+  final int overall;
+  final double stars;
 
   @override
   Widget build(BuildContext context) {
@@ -32,23 +44,26 @@ class MyCardPlayer extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
-                          children: const [
+                          children: [
                             Text(
-                              'Filipe',
-                              style: TextStyle(
+                              name,
+                              style: const TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold),
                             ),
+                            const SizedBox(
+                              width: 5,
+                            ),
                             Text(
-                              ' MC',
-                              style: TextStyle(
+                              position,
+                              style: const TextStyle(
                                 fontSize: 10,
                               ),
                             ),
                           ],
                         ),
-                        const Text(
-                          '@gnrfilipe04',
-                          style: TextStyle(
+                        Text(
+                          username,
+                          style: const TextStyle(
                             fontSize: 10,
                           ),
                         )
@@ -63,9 +78,9 @@ class MyCardPlayer extends StatelessWidget {
                         const SizedBox(
                           width: 5,
                         ),
-                        const Text(
-                          '80',
-                          style: TextStyle(
+                        Text(
+                          overall.toString(),
+                          style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ],
@@ -77,7 +92,7 @@ class MyCardPlayer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     RatingBar.builder(
-                      initialRating: 3,
+                      initialRating: stars,
                       minRating: 1,
                       direction: Axis.horizontal,
                       itemSize: 20,
