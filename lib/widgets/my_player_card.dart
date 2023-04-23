@@ -15,7 +15,7 @@ class MyCardPlayer extends StatelessWidget {
   final String position;
   final String username;
   final int overall;
-  final double stars;
+  final int stars;
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +92,7 @@ class MyCardPlayer extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     RatingBar.builder(
-                      initialRating: stars,
+                      initialRating: stars.toDouble(),
                       minRating: 1,
                       direction: Axis.horizontal,
                       itemSize: 20,

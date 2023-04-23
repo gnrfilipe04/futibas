@@ -61,6 +61,28 @@ mixin _$HomeViewModel on _HomeViewModelBase, Store {
       ActionController(name: '_HomeViewModelBase', context: context);
 
   @override
+  dynamic init() {
+    final _$actionInfo = _$_HomeViewModelBaseActionController.startAction(
+        name: '_HomeViewModelBase.init');
+    try {
+      return super.init();
+    } finally {
+      _$_HomeViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic getPlayers() {
+    final _$actionInfo = _$_HomeViewModelBaseActionController.startAction(
+        name: '_HomeViewModelBase.getPlayers');
+    try {
+      return super.getPlayers();
+    } finally {
+      _$_HomeViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void onItemTapped(int index) {
     final _$actionInfo = _$_HomeViewModelBaseActionController.startAction(
         name: '_HomeViewModelBase.onItemTapped');
@@ -208,13 +230,13 @@ mixin _$PlayerModel on _PlayerModelBase, Store {
       Atom(name: '_PlayerModelBase.stars', context: context);
 
   @override
-  double get stars {
+  int get stars {
     _$starsAtom.reportRead();
     return super.stars;
   }
 
   @override
-  set stars(double value) {
+  set stars(int value) {
     _$starsAtom.reportWrite(value, super.stars, () {
       super.stars = value;
     });

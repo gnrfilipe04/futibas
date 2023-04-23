@@ -1,10 +1,45 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:futibas/screens/home/widgets/PrimaryScreen.dart';
+import 'package:futibas/screens/home/widgets/SecondaryScreen.dart';
+import 'package:futibas/services/FirebaseService.dart';
 import 'package:mobx/mobx.dart';
 part 'home_view_model.g.dart';
 
 class HomeViewModel = _HomeViewModelBase with _$HomeViewModel;
 
 abstract class _HomeViewModelBase with Store {
-  
+
+  @action
+  init(){
+    getPlayers();
+  }
+
+  @action
+  getPlayers(){
+    FirebaseFirestore.instance
+        .collection('players')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+            querySnapshot.docs.forEach((player) {
+              List<PlayerModel> playersJ = [];
+                playersJ.add(
+                  PlayerModel(
+                    name: player['name'], 
+                    contact: player['contact'],
+                    overall: player['overal'],
+                    position: player['position'],
+                    stars: player['stars'],
+                    username: player['username']
+                  )
+                );
+
+                players = playersJ;
+                print(player.data());
+            });
+      });
+  }
+
   @observable
   int selectedIndex = 0;
 
@@ -22,9 +57,8 @@ abstract class _HomeViewModelBase with Store {
   @observable
   List<PlayerModel> players = [
     PlayerModel(name: 'Filipe', contact: 996805839, overall: 75, position: 'MC', stars: 3, username: '@gnrfilipe'),
-    PlayerModel(name: 'Samuel', contact: 996805839, overall: 77, position: 'MC', stars: 3.2, username: '@samuca'),
+    PlayerModel(name: 'Samuel', contact: 996805839, overall: 77, position: 'MC', stars: 4, username: '@samuca'),
   ];
-
 }
 
 class MatchModel = _MatchModelBase with _$MatchModel;
@@ -55,15 +89,6 @@ class PlayerModel = _PlayerModelBase with _$PlayerModel;
 
 abstract class _PlayerModelBase with Store {
 
-  _PlayerModelBase({
-    required this.name,
-    required this.position,
-    required this.stars,
-    required this.overall,
-    required this.contact,
-    required this.username
-  });
-
   @observable
   String name = '';
 
@@ -74,11 +99,38 @@ abstract class _PlayerModelBase with Store {
   String position = '';
 
   @observable
-  double stars = 0;
+  int stars = 0;
 
   @observable
   int overall = 0;
 
   @observable
   int contact = 0;
+
+  _PlayerModelBase({
+    required this.name,
+    required this.position,
+    required this.stars,
+    required this.overall,
+    required this.contact,
+    required this.username
+  });
+
+  // _PlayerModelBase.fromJson(Map<String, dynamic> json)
+  //     : name = json['name'],
+  //       position = json['position'],
+  //       contact = json['contact'],
+  //       overall = json['overall'],
+  //       stars = json['stars'],
+  //       username = json['username'];
+
+  // Map<String, dynamic> toJson() => {
+  //       'name': name,
+  //       'position': position,
+  //       'contact': contact,
+  //       'overall': overall,
+  //       'stars': stars,
+  //       'username': username
+  //     };
+
 }

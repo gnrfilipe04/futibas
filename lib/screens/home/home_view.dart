@@ -3,8 +3,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:futibas/app/app_provider.dart';
 import 'package:futibas/screens/home/home_view_model.dart';
 import 'package:futibas/theme/my_colors.dart';
-import 'package:futibas/widgets/my_card.dart';
-import 'package:futibas/widgets/my_player_card.dart';
+
+import 'widgets/PrimaryScreen.dart';
+import 'widgets/SecondaryScreen.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -16,14 +17,26 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   HomeViewModel homeViewModel = provider<HomeViewModel>();
 
-  
+  @override
+  void initState() {
+    homeViewModel.init();
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-
     List<Widget> widgetOptions = <Widget>[
-      PrimaryScreen(matchs: homeViewModel.matchs,),
-      SecondaryScreen(players: homeViewModel.players,)
+      Observer(builder: (_) {
+        return PrimaryScreen(
+          matchs: homeViewModel.matchs,
+        );
+      }),
+      Observer(builder: (_) {
+        return SecondaryScreen(
+          players: homeViewModel.players,
+        );
+      })
     ];
 
     return Scaffold(
@@ -60,12 +73,13 @@ class _HomeViewState extends State<HomeView> {
               Icons.account_circle,
               color: MyColors.darkSecondary,
               size: 29,
-            ),  
+            ),
           ),
         ],
       ),
       body: Observer(
-        builder: (_) => widgetOptions.elementAt(homeViewModel.selectedIndex),
+        builder: (_) =>
+            widgetOptions.elementAt(homeViewModel.selectedIndex),
       ),
       bottomNavigationBar: Observer(builder: (_) {
         return BottomNavigationBar(
@@ -80,113 +94,6 @@ class _HomeViewState extends State<HomeView> {
           ],
         );
       }),
-    );
-  }
-}
-
-class PrimaryScreen extends StatefulWidget {
-  const PrimaryScreen({super.key, required this.matchs});
-
-  final List<MatchModel> matchs;
-
-  @override
-  State<PrimaryScreen> createState() => _PrimaryScreenState();
-}
-
-class _PrimaryScreenState extends State<PrimaryScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text(
-                'Suas partidas',
-                style: TextStyle(color: MyColors.secondary, fontSize: 14),
-              ),
-              Icon(
-                Icons.add,
-                color: MyColors.primary,
-                size: 29,
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: widget.matchs.length,
-            itemBuilder: (context, int index){
-              return MyCard(
-                date: DateTime.now(),
-                title: widget.matchs[index].title,
-                local: widget.matchs[index].local,
-                players: widget.matchs[index].players,
-              );
-            }
-          ),
-        )
-      ],
-    );
-  }
-}
-
-
-class SecondaryScreen extends StatefulWidget {
-  const SecondaryScreen({super.key, required this.players});
-
-  final List<PlayerModel> players;
-
-  @override
-  State<SecondaryScreen> createState() => _SecondaryScreenState();
-}
-
-class _SecondaryScreenState extends State<SecondaryScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text(
-                'Seus jogadores',
-                style: TextStyle(color: MyColors.secondary, fontSize: 14),
-              ),
-              Icon(
-                Icons.add,
-                color: MyColors.primary,
-                size: 29,
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: widget.players.length,
-            itemBuilder: (context, int index){
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: MyCardPlayer(
-                  name: widget.players[index].name,
-                  username: widget.players[index].username,
-                  overall: widget.players[index].overall,
-                  position: widget.players[index].position,
-                  stars: widget.players[index].stars,
-                ),
-              );
-            }
-          ),
-        )
-      ],
     );
   }
 }
