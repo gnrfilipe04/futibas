@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:futibas/theme/my_colors.dart';
 
 class MyInput extends StatefulWidget {
-  const MyInput({Key? key, required this.label, this.validatorMethod,})
+  const MyInput({Key? key, this.label, this.validatorMethod, this.placeholder,})
       : super(key: key);
 
-  final String label;
+  final String? label;
+  final String? placeholder;
   final String? Function(String?)? validatorMethod;
 
   @override
@@ -16,6 +18,13 @@ class _MyInputState extends State<MyInput> {
   Widget build(BuildContext context) {
     return TextFormField(
       decoration: InputDecoration(
+        suffixIcon: const Icon(Icons.search),
+        suffixIconColor: MaterialStateColor.resolveWith((states) => 
+          states.contains(MaterialState.focused)
+          ? MyColors.primary
+          : MyColors.secondary
+        ),
+        hintText: widget.placeholder,
         labelText: widget.label,
         contentPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       ),

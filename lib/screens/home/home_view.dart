@@ -20,7 +20,6 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     homeViewModel.init();
-    // TODO: implement initState
     super.initState();
   }
 
@@ -88,6 +87,7 @@ class _HomeViewState extends State<HomeView> {
           selectedItemColor: MyColors.primary,
           unselectedItemColor: MyColors.secondary,
           currentIndex: homeViewModel.selectedIndex,
+          elevation: 0,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
             BottomNavigationBarItem(icon: Icon(Icons.group), label: '')

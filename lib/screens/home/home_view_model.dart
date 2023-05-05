@@ -1,18 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:futibas/screens/home/widgets/PrimaryScreen.dart';
-import 'package:futibas/screens/home/widgets/SecondaryScreen.dart';
-import 'package:futibas/services/FirebaseService.dart';
+import 'package:futibas/app/app_provider.dart';
+import 'package:futibas/services/NavigationService.dart';
 import 'package:mobx/mobx.dart';
 part 'home_view_model.g.dart';
 
 class HomeViewModel = _HomeViewModelBase with _$HomeViewModel;
 
 abstract class _HomeViewModelBase with Store {
+  NavigationService navigationService = provider<NavigationService>();
 
   @action
   init(){
     getPlayers();
+  }
+
+  @action 
+  toNewPlayer(){
+    return navigationService.navigateTo(routeName: 'NewPlayer');
   }
 
   @action
