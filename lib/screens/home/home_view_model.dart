@@ -10,65 +10,108 @@ abstract class _HomeViewModelBase with Store {
   NavigationService navigationService = provider<NavigationService>();
 
   @action
-  init(){
+  init() {
     getPlayers();
   }
 
-  @action 
-  toNewPlayer(){
+  @action
+  toNewPlayer() {
     return navigationService.navigateTo(routeName: 'NewPlayer');
   }
 
+  @observable
+  PlayerModel? playerFinded;
+
+  @observable
+  String playerFindedStatus = '';
+
   @action
-  getPlayers(){
+  searchNewPlayer(String? username) {
+    FirebaseFirestore.instance
+        .collection('players')
+        .where('username', isEqualTo: username)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+
+      if (querySnapshot.docs.isEmpty) {
+        playerFinded = null;
+        return playerFindedStatus = 'Ops, jogador não encontrado!';
+      }
+
+      for (var player in querySnapshot.docs) {
+        playerFinded = PlayerModel(
+            name: player['name'],
+            contact: player['contact'],
+            overall: player['overal'],
+            position: player['position'],
+            stars: player['stars'],
+            username: player['username']);
+
+        playerFindedStatus = '';
+      }
+    }, onError: (e) => print("Error completing: $e"));
+  }
+
+  @action
+  getPlayers() {
     FirebaseFirestore.instance
         .collection('players')
         .get()
         .then((QuerySnapshot querySnapshot) {
-            querySnapshot.docs.forEach((player) {
-              List<PlayerModel> playersJ = [];
-                playersJ.add(
-                  PlayerModel(
-                    name: player['name'], 
-                    contact: player['contact'],
-                    overall: player['overal'],
-                    position: player['position'],
-                    stars: player['stars'],
-                    username: player['username']
-                  )
-                );
+      querySnapshot.docs.forEach((player) {
+        List<PlayerModel> playersJ = [];
+        playersJ.add(PlayerModel(
+            name: player['name'],
+            contact: player['contact'],
+            overall: player['overal'],
+            position: player['position'],
+            stars: player['stars'],
+            username: player['username']));
 
-                players = playersJ;
-                print(player.data());
-            });
+        players = playersJ;
+        print(player.data());
       });
+    });
   }
 
   @observable
   int selectedIndex = 0;
 
   @action
-  void onItemTapped(int index){
+  void onItemTapped(int index) {
     selectedIndex = index;
   }
 
   @observable
   List<MatchModel> matchs = [
-    MatchModel(date: DateTime.now(), title: 'Futebol 7', local: 'AABB', players: 14),
-    MatchModel(date: DateTime.now(), title: 'Futebol 7', local: 'Fut 7', players: 16),
-  ]; 
+    MatchModel(
+        date: DateTime.now(), title: 'Futebol 7', local: 'AABB', players: 14),
+    MatchModel(
+        date: DateTime.now(), title: 'Futebol 7', local: 'Fut 7', players: 16),
+  ];
 
   @observable
   List<PlayerModel> players = [
-    PlayerModel(name: 'Filipe', contact: 996805839, overall: 75, position: 'MC', stars: 3, username: '@gnrfilipe'),
-    PlayerModel(name: 'Samuel', contact: 996805839, overall: 77, position: 'MC', stars: 4, username: '@samuca'),
+    PlayerModel(
+        name: 'Filipe',
+        contact: 996805839,
+        overall: 75,
+        position: 'MC',
+        stars: 3,
+        username: '@gnrfilipe'),
+    PlayerModel(
+        name: 'Samuel',
+        contact: 996805839,
+        overall: 77,
+        position: 'MC',
+        stars: 4,
+        username: '@samuca'),
   ];
 }
 
 class MatchModel = _MatchModelBase with _$MatchModel;
 
 abstract class _MatchModelBase with Store {
-  
   _MatchModelBase({
     required this.title,
     required this.date,
@@ -92,7 +135,6 @@ abstract class _MatchModelBase with Store {
 class PlayerModel = _PlayerModelBase with _$PlayerModel;
 
 abstract class _PlayerModelBase with Store {
-
   @observable
   String name = '';
 
@@ -111,14 +153,13 @@ abstract class _PlayerModelBase with Store {
   @observable
   int contact = 0;
 
-  _PlayerModelBase({
-    required this.name,
-    required this.position,
-    required this.stars,
-    required this.overall,
-    required this.contact,
-    required this.username
-  });
+  _PlayerModelBase(
+      {required this.name,
+      required this.position,
+      required this.stars,
+      required this.overall,
+      required this.contact,
+      required this.username});
 
   // _PlayerModelBase.fromJson(Map<String, dynamic> json)
   //     : name = json['name'],
@@ -136,5 +177,4 @@ abstract class _PlayerModelBase with Store {
   //       'stars': stars,
   //       'username': username
   //     };
-
 }

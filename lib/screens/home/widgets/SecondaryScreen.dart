@@ -50,6 +50,7 @@ class _SecondaryScreenState extends State<SecondaryScreen> {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: MyCardPlayer(
+                    isAdded: true,
                     name: widget.players[index].name,
                     username: widget.players[index].username,
                     overall: widget.players[index].overall,
