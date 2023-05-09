@@ -9,13 +9,15 @@ class MyCardPlayer extends StatelessWidget {
       required this.position,
       required this.username,
       required this.overall,
-      required this.stars});
+      required this.stars,
+      required this.isAdded});
 
   final String name;
   final String position;
   final String username;
   final int overall;
   final int stars;
+  final bool isAdded;
 
   @override
   Widget build(BuildContext context) {
@@ -109,10 +111,10 @@ class MyCardPlayer extends StatelessWidget {
                     ),
                     GestureDetector(
                         onTap: () => print('Whats'),
-                        child: Image.asset(
+                        child: isAdded ? Image.asset(
                           'assets/WhatsApp.png',
                           width: 30,
-                        ))
+                        ) : const Icon(Icons.person_add, size: 30, color: MyColors.primary,))
                   ],
                 )
               ],

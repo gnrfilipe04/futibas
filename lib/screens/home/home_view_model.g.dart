@@ -9,6 +9,38 @@ part of 'home_view_model.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$HomeViewModel on _HomeViewModelBase, Store {
+  late final _$playerFindedAtom =
+      Atom(name: '_HomeViewModelBase.playerFinded', context: context);
+
+  @override
+  PlayerModel? get playerFinded {
+    _$playerFindedAtom.reportRead();
+    return super.playerFinded;
+  }
+
+  @override
+  set playerFinded(PlayerModel? value) {
+    _$playerFindedAtom.reportWrite(value, super.playerFinded, () {
+      super.playerFinded = value;
+    });
+  }
+
+  late final _$playerFindedStatusAtom =
+      Atom(name: '_HomeViewModelBase.playerFindedStatus', context: context);
+
+  @override
+  String get playerFindedStatus {
+    _$playerFindedStatusAtom.reportRead();
+    return super.playerFindedStatus;
+  }
+
+  @override
+  set playerFindedStatus(String value) {
+    _$playerFindedStatusAtom.reportWrite(value, super.playerFindedStatus, () {
+      super.playerFindedStatus = value;
+    });
+  }
+
   late final _$selectedIndexAtom =
       Atom(name: '_HomeViewModelBase.selectedIndex', context: context);
 
@@ -83,6 +115,17 @@ mixin _$HomeViewModel on _HomeViewModelBase, Store {
   }
 
   @override
+  dynamic searchNewPlayer(String? username) {
+    final _$actionInfo = _$_HomeViewModelBaseActionController.startAction(
+        name: '_HomeViewModelBase.searchNewPlayer');
+    try {
+      return super.searchNewPlayer(username);
+    } finally {
+      _$_HomeViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic getPlayers() {
     final _$actionInfo = _$_HomeViewModelBaseActionController.startAction(
         name: '_HomeViewModelBase.getPlayers');
@@ -107,6 +150,8 @@ mixin _$HomeViewModel on _HomeViewModelBase, Store {
   @override
   String toString() {
     return '''
+playerFinded: ${playerFinded},
+playerFindedStatus: ${playerFindedStatus},
 selectedIndex: ${selectedIndex},
 matchs: ${matchs},
 players: ${players}
