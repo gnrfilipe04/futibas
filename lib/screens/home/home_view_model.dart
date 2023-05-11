@@ -20,36 +20,17 @@ abstract class _HomeViewModelBase with Store {
   }
 
   @observable
-  PlayerModel? playerFinded;
+  String? usernameToSearch;
 
-  @observable
-  String playerFindedStatus = '';
+  @computed
+  Stream<QuerySnapshot<Map<String, dynamic>>> get searchNewPlayer => FirebaseFirestore.instance
+        .collection('players')
+        .where('username', isEqualTo: usernameToSearch)
+        .snapshots();
 
   @action
-  searchNewPlayer(String? username) {
-    FirebaseFirestore.instance
-        .collection('players')
-        .where('username', isEqualTo: username)
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-
-      if (querySnapshot.docs.isEmpty) {
-        playerFinded = null;
-        return playerFindedStatus = 'Ops, jogador não encontrado!';
-      }
-
-      for (var player in querySnapshot.docs) {
-        playerFinded = PlayerModel(
-            name: player['name'],
-            contact: player['contact'],
-            overall: player['overal'],
-            position: player['position'],
-            stars: player['stars'],
-            username: player['username']);
-
-        playerFindedStatus = '';
-      }
-    }, onError: (e) => print("Error completing: $e"));
+  setUsername(String? username) {
+    usernameToSearch = username;
   }
 
   @action

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:futibas/app/app_provider.dart';
@@ -25,8 +26,7 @@ class _NewPlayerState extends State<NewPlayer> {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () => {
-            homeViewModel.playerFindedStatus = '',
-            homeViewModel.playerFinded = null,
+            homeViewModel.usernameToSearch = null,
             navigationService.goback()
           },
           child: const Icon(
@@ -65,27 +65,29 @@ class _NewPlayerState extends State<NewPlayer> {
                 ),
                 MyInput(
                   placeholder: '@jogador',
-                  onSend: homeViewModel.searchNewPlayer,
+                  onSend: homeViewModel.setUsername,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                homeViewModel.playerFinded == null
-                  ? Column()
-                  : MyCardPlayer(
+                StreamBuilder<QuerySnapshot<Map<String, dynamic>>>  ( 
+                  stream: homeViewModel.searchNewPlayer,
+                  builder: (_, snapshot) {
+                    if(homeViewModel.usernameToSearch == null || homeViewModel.usernameToSearch!.isEmpty) return Container();
+                    if(snapshot.hasError) return const Text('Falha na conexão');
+                    if(snapshot.connectionState == ConnectionState.waiting) return const Text('Carregando...');
+                    if(snapshot.data!.docs.isEmpty){
+                      return const Text('Jogador não encontrado');
+                    } 
+                    
+                    return MyCardPlayer(
                         isAdded: false,
-                        name: homeViewModel.playerFinded!.name,
-                        position: homeViewModel.playerFinded!.position,
-                        username: homeViewModel.playerFinded!.username,
-                        overall: homeViewModel.playerFinded!.overall,
-                        stars: homeViewModel.playerFinded!.stars),
-                Center(
-                  child: Text(homeViewModel.playerFindedStatus,
-                    style: const TextStyle(
-                      color: MyColors.secondary,
-                      fontSize: 18,
-                    ),
-                  ),
+                        name: snapshot.data!.docs.first.get('name'),
+                        position: snapshot.data!.docs.first.get('position'),
+                        username: snapshot.data!.docs.first.get('username'),
+                        overall: snapshot.data!.docs.first.get('overal'),
+                        stars: snapshot.data!.docs.first.get('stars'));
+                  }
                 )
               ],
             ),

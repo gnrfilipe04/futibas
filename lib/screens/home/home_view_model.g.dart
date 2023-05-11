@@ -9,35 +9,30 @@ part of 'home_view_model.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$HomeViewModel on _HomeViewModelBase, Store {
-  late final _$playerFindedAtom =
-      Atom(name: '_HomeViewModelBase.playerFinded', context: context);
+  Computed<Stream<QuerySnapshot<Map<String, dynamic>>>>?
+      _$searchNewPlayerComputed;
 
   @override
-  PlayerModel? get playerFinded {
-    _$playerFindedAtom.reportRead();
-    return super.playerFinded;
+  Stream<QuerySnapshot<Map<String, dynamic>>> get searchNewPlayer =>
+      (_$searchNewPlayerComputed ??=
+              Computed<Stream<QuerySnapshot<Map<String, dynamic>>>>(
+                  () => super.searchNewPlayer,
+                  name: '_HomeViewModelBase.searchNewPlayer'))
+          .value;
+
+  late final _$usernameToSearchAtom =
+      Atom(name: '_HomeViewModelBase.usernameToSearch', context: context);
+
+  @override
+  String? get usernameToSearch {
+    _$usernameToSearchAtom.reportRead();
+    return super.usernameToSearch;
   }
 
   @override
-  set playerFinded(PlayerModel? value) {
-    _$playerFindedAtom.reportWrite(value, super.playerFinded, () {
-      super.playerFinded = value;
-    });
-  }
-
-  late final _$playerFindedStatusAtom =
-      Atom(name: '_HomeViewModelBase.playerFindedStatus', context: context);
-
-  @override
-  String get playerFindedStatus {
-    _$playerFindedStatusAtom.reportRead();
-    return super.playerFindedStatus;
-  }
-
-  @override
-  set playerFindedStatus(String value) {
-    _$playerFindedStatusAtom.reportWrite(value, super.playerFindedStatus, () {
-      super.playerFindedStatus = value;
+  set usernameToSearch(String? value) {
+    _$usernameToSearchAtom.reportWrite(value, super.usernameToSearch, () {
+      super.usernameToSearch = value;
     });
   }
 
@@ -115,11 +110,11 @@ mixin _$HomeViewModel on _HomeViewModelBase, Store {
   }
 
   @override
-  dynamic searchNewPlayer(String? username) {
+  dynamic setUsername(String? username) {
     final _$actionInfo = _$_HomeViewModelBaseActionController.startAction(
-        name: '_HomeViewModelBase.searchNewPlayer');
+        name: '_HomeViewModelBase.setUsername');
     try {
-      return super.searchNewPlayer(username);
+      return super.setUsername(username);
     } finally {
       _$_HomeViewModelBaseActionController.endAction(_$actionInfo);
     }
@@ -150,11 +145,11 @@ mixin _$HomeViewModel on _HomeViewModelBase, Store {
   @override
   String toString() {
     return '''
-playerFinded: ${playerFinded},
-playerFindedStatus: ${playerFindedStatus},
+usernameToSearch: ${usernameToSearch},
 selectedIndex: ${selectedIndex},
 matchs: ${matchs},
-players: ${players}
+players: ${players},
+searchNewPlayer: ${searchNewPlayer}
     ''';
   }
 }
