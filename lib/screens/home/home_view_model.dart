@@ -39,8 +39,8 @@ abstract class _HomeViewModelBase with Store {
         .collection('players')
         .get()
         .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((player) {
-        List<PlayerModel> playersJ = [];
+      List<PlayerModel> playersJ = [];
+      for (var player in querySnapshot.docs) {
         playersJ.add(PlayerModel(
             name: player['name'],
             contact: player['contact'],
@@ -49,9 +49,8 @@ abstract class _HomeViewModelBase with Store {
             stars: player['stars'],
             username: player['username']));
 
+      }
         players = playersJ;
-        print(player.data());
-      });
     });
   }
 

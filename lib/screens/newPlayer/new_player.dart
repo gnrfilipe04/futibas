@@ -7,6 +7,7 @@ import 'package:futibas/services/NavigationService.dart';
 import 'package:futibas/theme/my_colors.dart';
 import 'package:futibas/widgets/my_input.dart';
 import 'package:futibas/widgets/my_player_card.dart';
+import 'package:futibas/widgets/my_stream_message.dart';
 import 'package:futibas/widgets/my_title.dart';
 
 class NewPlayer extends StatefulWidget {
@@ -70,25 +71,27 @@ class _NewPlayerState extends State<NewPlayer> {
                 const SizedBox(
                   height: 20,
                 ),
-                StreamBuilder<QuerySnapshot<Map<String, dynamic>>>  ( 
-                  stream: homeViewModel.searchNewPlayer,
-                  builder: (_, snapshot) {
-                    if(homeViewModel.usernameToSearch == null || homeViewModel.usernameToSearch!.isEmpty) return Container();
-                    if(snapshot.hasError) return const Text('Falha na conexão');
-                    if(snapshot.connectionState == ConnectionState.waiting) return const Text('Carregando...');
-                    if(snapshot.data!.docs.isEmpty){
-                      return const Text('Jogador não encontrado');
-                    } 
-                    
-                    return MyCardPlayer(
-                        isAdded: false,
-                        name: snapshot.data!.docs.first.get('name'),
-                        position: snapshot.data!.docs.first.get('position'),
-                        username: snapshot.data!.docs.first.get('username'),
-                        overall: snapshot.data!.docs.first.get('overal'),
-                        stars: snapshot.data!.docs.first.get('stars'));
-                  }
-                )
+                StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                    stream: homeViewModel.searchNewPlayer,
+                    builder: (_, snapshot) {
+
+                      if (homeViewModel.usernameToSearch == null ||
+                          homeViewModel.usernameToSearch!.isEmpty) return Container();
+
+                      if (snapshot.hasError) return const MyStreamMessage(text: 'Falha na conexão com o servidor');
+
+                      if (snapshot.connectionState == ConnectionState.waiting) return const MyStreamMessage(text: 'Carregando...');
+
+                      if (snapshot.data!.docs.isEmpty) return const MyStreamMessage(text: 'Jogador não encontrado!');
+
+                      return MyCardPlayer(
+                          isAdded: false,
+                          name: snapshot.data!.docs.first.get('name'),
+                          position: snapshot.data!.docs.first.get('position'),
+                          username: snapshot.data!.docs.first.get('username'),
+                          overall: snapshot.data!.docs.first.get('overal'),
+                          stars: snapshot.data!.docs.first.get('stars'));
+                    })
               ],
             ),
           ),

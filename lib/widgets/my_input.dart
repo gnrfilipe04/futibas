@@ -19,6 +19,7 @@ class _MyInputState extends State<MyInput> {
   Widget build(BuildContext context) {
     return TextFormField(
       onFieldSubmitted: (value) => widget.onSend!(value),
+      keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         suffixIcon: const Icon(Icons.search),
         suffixIconColor: MaterialStateColor.resolveWith((states) => 

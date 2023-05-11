@@ -16,6 +16,7 @@ class SecondaryScreen extends StatefulWidget {
 
 class _SecondaryScreenState extends State<SecondaryScreen> {
   NavigationService navigationService = provider<NavigationService>();
+  HomeViewModel homeViewModel = provider<HomeViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +60,7 @@ class _SecondaryScreenState extends State<SecondaryScreen> {
                   ),
                 );
               }),
-        )
+        ),
       ],
     );
   }
