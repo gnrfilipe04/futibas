@@ -17,6 +17,7 @@ class MyInput extends StatefulWidget {
 class _MyInputState extends State<MyInput> {
   @override
   Widget build(BuildContext context) {
+
     return TextFormField(
       onFieldSubmitted: (value) => widget.onSend!(value),
       keyboardType: TextInputType.emailAddress,

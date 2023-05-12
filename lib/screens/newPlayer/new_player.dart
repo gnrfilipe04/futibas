@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:futibas/app/app_provider.dart';
@@ -80,7 +81,7 @@ class _NewPlayerState extends State<NewPlayer> {
 
                       if (snapshot.hasError) return const MyStreamMessage(text: 'Falha na conexão com o servidor');
 
-                      if (snapshot.connectionState == ConnectionState.waiting) return const MyStreamMessage(text: 'Carregando...');
+                      if (snapshot.connectionState == ConnectionState.waiting) return Lottie.asset('assets/lottie/loading.json');
 
                       if (snapshot.data!.docs.isEmpty) return const MyStreamMessage(text: 'Jogador não encontrado!');
 
