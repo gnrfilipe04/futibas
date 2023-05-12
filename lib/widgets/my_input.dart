@@ -15,14 +15,17 @@ class MyInput extends StatefulWidget {
 }
 
 class _MyInputState extends State<MyInput> {
+
+  String text = '';
+
   @override
   Widget build(BuildContext context) {
-
     return TextFormField(
       onFieldSubmitted: (value) => widget.onSend!(value),
+      onChanged: (value) => text = value,
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
-        suffixIcon: const Icon(Icons.search),
+        suffixIcon: GestureDetector(child: const Icon(Icons.search), onTap: () => widget.onSend!(text)),
         suffixIconColor: MaterialStateColor.resolveWith((states) => 
           states.contains(MaterialState.focused)
           ? MyColors.primary
