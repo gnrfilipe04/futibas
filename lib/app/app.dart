@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: MyTheme.darkTheme,
       debugShowCheckedModeBanner: false,
       onGenerateRoute: router.generateRoute,
-      initialRoute: routes.HomeRoute,
+      initialRoute: routes.SignInRoute,
       navigatorKey: provider<NavigationService>().navigatorKey,
     );
   }
