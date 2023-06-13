@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:futibas/theme/my_colors.dart';
 
 class MyInput extends StatefulWidget {
-  const MyInput({Key? key, this.label, this.validatorMethod, this.placeholder, this.onSend, this.suffixIcon,})
+  const MyInput({Key? key, this.label, this.validatorMethod, this.placeholder, this.onSend, this.suffixIcon, this.controller, this.onChanged,})
       : super(key: key);
 
   final String? label;
   final String? placeholder;
   final String? Function(String?)? validatorMethod;
   final Function(String?)? onSend;
+  final Function(String?)? onChanged;
   final Widget? suffixIcon;
+  final TextEditingController? controller;
 
   @override
   State<MyInput> createState() => _MyInputState();
@@ -19,6 +21,8 @@ class _MyInputState extends State<MyInput> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.controller,
+      onChanged: (value) => widget.onChanged != null ? widget.onChanged!(value) : {},
       onFieldSubmitted: (value) => widget.onSend != null ? widget.onSend!(value) : {},
       decoration: InputDecoration(
         suffixIcon: widget.suffixIcon,

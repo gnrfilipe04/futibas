@@ -46,7 +46,7 @@ class _SignInState extends State<SignIn> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const MyInput(label: 'Nome', ),
+                    MyInput(label: 'Nome', onChanged: signInViewModel.setName,),
                     const SizedBox( height: 10,),
                     const MyInput(label: 'Posição', ),
                     const SizedBox( height: 10,),
