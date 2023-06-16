@@ -46,24 +46,24 @@ class _SignInState extends State<SignIn> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    MyInput(label: 'Nome', onChanged: signInViewModel.setName,),
+                    MyInput(label: 'Nome', onChanged: signInViewModel.setName, validatorMethod: (value) => signInViewModel.validateRequired(value, 'Nome'),),
+                    const SizedBox( height: 10, ),
+                     MyInput(label: 'Posição', onChanged: signInViewModel.setPosition, validatorMethod: (value) => signInViewModel.validateRequired(value, 'Posição'),),
                     const SizedBox( height: 10,),
-                    const MyInput(label: 'Posição', ),
+                    MyInput(label: 'Nota', onChanged: signInViewModel.setNote, validatorMethod: (value) => signInViewModel.validateRequired(value, 'Nota'),),
                     const SizedBox( height: 10,),
-                    const MyInput(label: 'Nota', ),
+                    MyInput(label: 'Pontuação geral', onChanged: signInViewModel.setOverall, validatorMethod: (value) => signInViewModel.validateRequired(value, 'Pontuação geral'),),
                     const SizedBox( height: 10,),
-                    const MyInput(label: 'Pontuação geral', ),
+                    MyInput(label: 'Contato', onChanged: signInViewModel.setContact, validatorMethod: (value) => signInViewModel.validateRequired(value, 'Contato'),),
                     const SizedBox( height: 10,),
-                    const MyInput(label: 'Contato', ),
-                    const SizedBox( height: 10,),
-                    const MyInput(label: 'Usuário', ),
+                    MyInput(label: 'Usuário', onChanged: signInViewModel.setUsername, validatorMethod: (value) => signInViewModel.validateRequired(value, 'Usuário'),),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       child: MyButton(
                         title: 'Criar',
                         bgColor: MyColors.primary,
                         titleColor: MyColors.dark,
-                        onPressed: () => {},
+                        onPressed: signInViewModel.sendForm,
                       ),
                     )
                   ],
